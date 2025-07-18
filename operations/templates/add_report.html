@@ -1,0 +1,11 @@
+<!-- templates/add_report.html -->
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <h1>Add New Report</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="default">Save Report</button>
+  </form>
+{% endblock %}

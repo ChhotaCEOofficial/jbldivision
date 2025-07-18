@@ -1,0 +1,256 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JBL Division</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+          background: #f4f6f9;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .sidebar {
+          width: 220px;
+          min-height: 100vh;
+          background: #1f2d3d;
+          color: white;
+      }
+
+      .sidebar h5 {
+          margin-top: 10px;
+          font-weight: 600;
+      }
+
+      .sidebar img {
+          max-width: 100%;
+          height: 80px;
+          margin-bottom: 10px;
+      }
+
+      .sidebar .nav-link {
+          color: #c2c7d0;
+      }
+
+      .sidebar .nav-link:hover {
+          background: #3c8dbc;
+          color: #fff;
+          border-radius: 5px;
+      }
+
+      .header-controls a {
+          margin-left: 10px;
+      }
+
+      .card-hover {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: none;
+          border-radius: 15px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          background-color: #ffffff;
+      }
+
+      .card-hover:hover {
+          transform: scale(1.05);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .card img {
+          height: 150px;
+          object-fit: contain;
+          padding: 20px;
+      }
+  </style>
+</head>
+<body>
+
+    <style>
+      body { background-color: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
+      .sidebar {
+        width: 220px; height: 100vh; background: #1f2d3d;
+        color: white; position: fixed; top: 0; left: 0; padding: 20px;
+      }
+      .sidebar h5 { font-weight: bold; margin-bottom: 20px; }
+      .sidebar a { color: white; text-decoration: none; display: block; margin: 15px 0; }
+      .sidebar a:hover { color: #3c8dbc; }
+      .main { margin-left: 240px; padding: 30px; }
+      .topbar {
+        display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+      }
+      .card-stat {
+        padding: 20px; border-radius: 10px; background-color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;
+      }
+      .logout-btn { margin-left: 10px; }
+      .table thead { background-color: #f8f9fa; }
+    </style>
+
+  
+  <div class="sidebar">
+    <img src="{% static 'images/jbldiv_logo.png' %}" >
+    <h5>Jabalpur Division</h5>
+    <a href="{% url 'mis_reports' %}">Home</a>
+  
+
+  </div>
+  
+  <div class="main">
+    <div class="topbar">
+      <h4>MIS Reports</h4>
+      <div>
+        <span><strong>Yash</strong></span>
+        <a href="{% url 'logout' %}" class="btn btn-success logout-btn">Logout</a>
+        <a href="{% url 'clear_cache' %}" class="btn btn-danger logout-btn">Clear Cache</a>
+      </div>
+    </div>
+  
+
+          <!-- Card Section -->
+          <div class="row g-4">
+            <div class="col-md-4">
+                <a href="{% url 'dashboard' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/1.png" class="card-img-top mx-auto" alt="Admin Panel">
+                        <div class="card-body">
+                            <h5 class="card-title">Admin Panel</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'data_entry' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/2.png" class="card-img-top mx-auto" alt="Data Entry">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Entry</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'mis_reports' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/3.png" class="card-img-top mx-auto" alt="MIS Reports">
+                        <div class="card-body">
+                            <h5 class="card-title">MIS Reports</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div style="padding: 24px; max-width: 1200px; margin: 0 auto; font-family: 'Segoe UI', sans-serif;">
+            <!-- Header -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+              <h2 style="font-size: 22px; font-weight: 600; color: #2d3748;">Home : Report Viewer</h2>
+              <button style="background-color: #4f46e5; color: white; padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-weight: 500; transition: all 0.2s;" 
+                      onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.1)'" 
+                      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+                Force Reload
+              </button>
+            </div>
+          
+            <!-- Boxes Grid -->
+            <div style="display: flex; flex-wrap: wrap; gap: 16px;">
+              <!-- Box 1 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #e0f7fa, #b2ebf2); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #1e3a8a; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">Jabalpur Operations</h3>
+                </div>
+              </div>
+              
+              <!-- Box 2 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #e8f5e9, #c8e6c9); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #1b5e20; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">Jabalpur Div PP</h3>
+                </div>
+              </div>
+              
+              <!-- Box 3 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #fff3e0, #ffe0b2); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #e65100; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">Rail Madad SQL</h3>
+                </div>
+              </div>
+              
+              <!-- Box 4 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #f3e5f5, #e1bee7); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #6a1b9a; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">DNR ENG 3</h3>
+                </div>
+              </div>
+              
+              <!-- Box 5 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #e0f2f1, #b2dfdb); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #00695c; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">Report Usage Metrics Report</h3>
+                </div>
+              </div>
+              
+              <!-- Box 6 -->
+              <div style="width: calc(50% - 8px);">
+                <div style="background: linear-gradient(135deg, #e8eaf6, #c5cae9); height: 140px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s; border: 1px solid #e2e8f0;"
+                     onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 6px 12px rgba(0,0,0,0.1)'"
+                     onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 6px rgba(0,0,0,0.05)'">
+                  <h3 style="color: #283593; text-align: center; font-weight: 600; font-size: 18px; padding: 0 12px;">Jabalpur Operations Working</h3>
+                </div>
+              </div>
+            </div>
+          </div>  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  </body>
+  <script>
+    // Disable Right Click
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+    });
+
+    // Disable DevTools shortcuts
+    document.addEventListener("keydown", function(e) {
+        // F12
+        if (e.key === "F12") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+J
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
+            e.preventDefault();
+        }
+        // Ctrl+U
+        if (e.ctrlKey && e.key.toLowerCase() === "u") {
+            e.preventDefault();
+        }
+        // Ctrl+S (optional)
+        if (e.ctrlKey && e.key.toLowerCase() === "s") {
+            e.preventDefault();
+        }
+    });
+
+    // Optional: try to detect DevTools open
+    setInterval(function () {
+        if (window.outerHeight - window.innerHeight > 150 || window.outerWidth - window.innerWidth > 150) {
+            document.body.innerHTML = "<h1 style='color:red;text-align:center;'>DevTools are not allowed!</h1>";
+        }
+    }, 1000);
+</script>
+
+</html>

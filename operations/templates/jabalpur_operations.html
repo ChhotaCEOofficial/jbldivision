@@ -1,0 +1,798 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JBL Division</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+          background: #f4f6f9;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .sidebar {
+          width: 220px;
+          min-height: 100vh;
+          background: #1f2d3d;
+          color: white;
+      }
+
+      .sidebar h5 {
+          margin-top: 10px;
+          font-weight: 600;
+      }
+
+      .sidebar img {
+          max-width: 100%;
+          height: 80px;
+          margin-bottom: 10px;
+      }
+
+      .sidebar .nav-link {
+          color: #c2c7d0;
+      }
+
+      .sidebar .nav-link:hover {
+          background: #3c8dbc;
+          color: #fff;
+          border-radius: 5px;
+      }
+
+      .header-controls a {
+          margin-left: 10px;
+      }
+
+      .card-hover {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          border: none;
+          border-radius: 15px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+          background-color: #ffffff;
+      }
+
+      .card-hover:hover {
+          transform: scale(1.05);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .card img {
+          height: 150px;
+          object-fit: contain;
+          padding: 20px;
+      }
+  </style>
+</head>
+<body>
+
+    <style>
+      body { background-color: #f4f6f9; font-family: 'Segoe UI', sans-serif; }
+      .sidebar {
+        width: 220px; height: 100vh; background: #1f2d3d;
+        color: white; position: fixed; top: 0; left: 0; padding: 20px;
+      }
+      .sidebar h5 { font-weight: bold; margin-bottom: 20px; }
+      .sidebar a { color: white; text-decoration: none; display: block; margin: 15px 0; }
+      .sidebar a:hover { color: #3c8dbc; }
+      .main { margin-left: 240px; padding: 30px; }
+      .topbar {
+        display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+      }
+      .card-stat {
+        padding: 20px; border-radius: 10px; background-color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px;
+      }
+      .logout-btn { margin-left: 10px; }
+      .table thead { background-color: #f8f9fa; }
+    </style>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+  <div class="sidebar">
+    <img src="{% static 'images/jbldiv_logo.png' %}" >
+    <h5>Jabalpur Division</h5>
+    <a href="{% url 'data_entry' %}">Home</a>
+    <a href="{% url 'my_reports' %}">My Reports</a>
+    <a href="{% url 'rail_madad' %}" class="nav-link">Rail Madad</a>
+    <a href="{% url 'jabalpur_operations' %}" class="nav-link">Jabalpur Operations</a>
+
+  </div>
+  
+  <div class="main">
+    <div class="topbar">
+      <h4>Data Entry</h4>
+      <div>
+        <span><strong>Yash</strong></span>
+        <a href="{% url 'logout' %}" class="btn btn-success logout-btn">Logout</a>
+        <a href="{% url 'clear_cache' %}" class="btn btn-danger logout-btn">Clear Cache</a>
+      </div>
+    </div>
+  
+
+          <!-- Card Section -->
+          <div class="row g-4">
+            <div class="col-md-4">
+                <a href="{% url 'dashboard' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/1.png" class="card-img-top mx-auto" alt="Admin Panel">
+                        <div class="card-body">
+                            <h5 class="card-title">Admin Panel</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'data_entry' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/2.png" class="card-img-top mx-auto" alt="Data Entry">
+                        <div class="card-body">
+                            <h5 class="card-title">Data Entry</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'mis_reports' %}" class="text-decoration-none text-dark">
+                    <div class="card card-hover text-center">
+                        <img src="/static/images/3.png" class="card-img-top mx-auto" alt="MIS Reports">
+                        <div class="card-body">
+                            <h5 class="card-title">MIS Reports</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    
+        <br>
+        <br>
+        <br>
+        <br>
+    {% comment %} <h5 class="mb-3">ADMIN PAGE: LIST OF PENDING USER REGISTRATION</h5> {% endcomment %}
+    
+    <!-- Top Nav & Sidebar like image -->
+
+    <style>
+        .tab-button {
+            border: none;
+            background-color: transparent;
+            font-weight: bold;
+            margin-right: 20px;
+            padding: 10px 0;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            border-color: #000;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        .action-icons i {
+            font-size: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+    <div class="container mt-3">
+        <h5>JABALPUR OPERATIONS</h5>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" id="meTab" data-bs-toggle="tab" href="#meTabContent">ME Basics</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="statsTab" data-bs-toggle="tab" href="#statsTabContent">Stats Monthly</a>
+            </li>
+        </ul>
+    
+        <div class="tab-content mt-3">
+            <!-- ME Basics Tab Content -->
+            <div class="tab-pane fade show active" id="meTabContent">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0">ME Basics</h6>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addMeModal">ADD REPORT</button>
+                  </div>
+                  
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>TRAIN NUMBER</th>
+                                <th>TRAIN NAME</th>
+                                <th>TRAIN TYPE</th>
+                                <th>OWNING ZONE/DIV</th>
+                                <th>FROM POINT AT</th>
+                                <th>TO POINT AT</th>
+                                <th>MORE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          {% for entry in me_data %}
+                          <tr>
+                              <td>{{ entry.train_number }}</td>
+                              <td>{{ entry.train_name }}</td>
+                              <td>{{ entry.train_type }}</td>
+                              <td>{{ entry.owning_zone }}</td>
+                              <td>{{ entry.from_point }}</td>
+                              <td>{{ entry.to_point }}</td>
+                              <td class="action-icons text-center">
+                                  <i class="bi bi-eye"></i>
+                                  <i class="bi bi-pencil"></i>
+                              </td>
+                          </tr>
+                          {% empty %}
+                          <tr><td colspan="7">No ME basic entries found.</td></tr>
+                          {% endfor %}
+                      </tbody>
+                    </table>
+                </div>  
+            </div>
+    
+            <!-- Stats Monthly Tab Content -->
+            <div class="tab-pane fade" id="statsTabContent">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0">Stats Monthly</h6>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addStatsModal">ADD REPORT</button>
+                  </div>
+                  
+                <table class="table table-bordered">
+                    
+                    <thead>
+                        <tr>
+                            <th>MONTH</th>
+                            <th>ME</th>
+                            <th>PASS</th>
+                            <th>GOODS</th>
+                            <th>TOTAL</th>
+                            <th>PUNCTUALITYME</th>
+                            <th>WAGON HOLDING</th>
+                            <th>MORE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for stat in stats_data %}
+                      <tr>
+                          <td>{{ stat.month }}</td>
+                          <td>{{ stat.total_trains }}</td>
+                          <td>{{ stat.late_trains }}</td>
+                          <td>{{ stat.maintenance_done }}</td>
+                          <td class="action-icons text-center">
+                              <i class="bi bi-eye"></i>
+                              <i class="bi bi-pencil"></i>
+                          </td>
+                      </tr>
+                      {% empty %}
+                      <tr><td colspan="5">No monthly stats found.</td></tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+<!-- Modal for ME Basics -->
+<div class="modal fade" id="addMeModal" tabindex="-1" aria-labelledby="addMeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form method="POST" id="meForm" enctype="multipart/form-data" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title" id="addMeModalLabel">Add ME Basic Entry</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Train Number</label>
+                    <input type="text" class="form-control" name="train_number" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Train Name</label>
+                    <input type="text" class="form-control" name="train_name" required>
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Train Type</label>
+                    <input type="text" class="form-control" name="train_type">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Train Sub Type</label>
+                    <input type="text" class="form-control" name="train_sub_type">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Owning Zone</label>
+                    <input type="text" class="form-control" name="owning_zone">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Owning Division</label>
+                    <input type="text" class="form-control" name="owning_division">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Owning Depot</label>
+                    <input type="text" class="form-control" name="owning_depot">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Days of Run</label>
+                    <input type="text" class="form-control" name="days_of_run">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>From Point</label>
+                    <input type="text" class="form-control" name="from_point">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Departure</label>
+                    <input type="text" class="form-control" name="departure">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>To Point</label>
+                    <input type="text" class="form-control" name="to_point">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Arrival</label>
+                    <input type="text" class="form-control" name="arrival">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Is Reserved</label>
+                    <input type="text" class="form-control" name="is_reserved">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Travel Time</label>
+                    <input type="text" class="form-control" name="travel_time">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Total Kms</label>
+                    <input type="text" class="form-control" name="total_kms">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Average Speed</label>
+                    <input type="text" class="form-control" name="average_speed">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>WTT Stops</label>
+                    <input type="text" class="form-control" name="wtt_stops">
+                  </div>
+                  <div class="col-md-6">
+                    <label>WTT Stops Time (min)</label>
+                    <input type="text" class="form-control" name="wtt_stops_time">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>DNR TM</label>
+                    <input type="text" class="form-control" name="dnr_tm">
+                  </div>
+                  <div class="col-md-6">
+                    <label>DNR ETA</label>
+                    <input type="text" class="form-control" name="dnr_eta">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>ECR TM</label>
+                    <input type="text" class="form-control" name="ecr_tm">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Load Value</label>
+                    <input type="text" class="form-control" name="load_value">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>NOR Value</label>
+                    <input type="text" class="form-control" name="nor_value">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Max Value</label>
+                    <input type="text" class="form-control" name="max_value">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Type 1</label>
+                    <input type="text" class="form-control" name="type_1">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Type 2</label>
+                    <input type="text" class="form-control" name="type_2">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Number of Rakes</label>
+                    <input type="text" class="form-control" name="number_of_rakes">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Main Type</label>
+                    <input type="text" class="form-control" name="main_type">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Reversal</label>
+                    <input type="text" class="form-control" name="reversal">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Loco Change</label>
+                    <input type="text" class="form-control" name="loco_change">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Is Pantry</label>
+                    <input type="text" class="form-control" name="is_pantry">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Is VP</label>
+                    <input type="text" class="form-control" name="is_vp">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-12">
+                    <label>Composition</label>
+                    <input type="text" class="form-control" name="composition">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+          </form>
+          {% if messages %}
+          {% for msg in messages %}
+              <div class="alert alert-info">{{ msg }}</div>
+          {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Modal for Stats Monthly -->
+<div class="modal fade" id="addStatsModal" tabindex="-1" aria-labelledby="addStatsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <form method="POST" id="statsForm" enctype="multipart/form-data" class="modal-content">
+            {% csrf_token %}
+            <div class="modal-header">
+              <h5 class="modal-title">Add Monthly Stats Entry</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+          
+            <div class="modal-body">
+              <div class="container-fluid">
+                
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Month</label>
+                    <input type="text" class="form-control" name="month" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>ME</label>
+                    <input type="text" class="form-control" name="me" required>
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Pass</label>
+                    <input type="text" class="form-control" name="pass" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Goods</label>
+                    <input type="text" class="form-control" name="goods" required>
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Total</label>
+                    <input type="number" class="form-control" name="total">
+                  </div>
+                  <div class="col-md-6">
+                    <label>WagonHolding</label>
+                    <input type="number" class="form-control" name="wagon_holding">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>PunctualityME</label>
+                    <input type="number" class="form-control" name="punctuality_me">
+                  </div>
+                  <div class="col-md-6">
+                    <label>PunctualityPass</label>
+                    <input type="number" class="form-control" name="punctuality_pass">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>FYFY</label>
+                    <input type="number" class="form-control" name="fyfy">
+                  </div>
+                  <div class="col-md-6">
+                    <label>ACP</label>
+                    <input type="number" class="form-control" name="acp">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Miscreant</label>
+                    <input type="number" class="form-control" name="miscreant">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Agitation</label>
+                    <input type="number" class="form-control" name="agitation">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Accident</label>
+                    <input type="number" class="form-control" name="accident">
+                  </div>
+                  <div class="col-md-6">
+                    <label>DL</label>
+                    <input type="number" class="form-control" name="dl">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>EL</label>
+                    <input type="number" class="form-control" name="el">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Incident</label>
+                    <input type="number" class="form-control" name="incident">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>CW</label>
+                    <input type="number" class="form-control" name="cw">
+                  </div>
+                  <div class="col-md-6">
+                    <label>OHE_TRD</label>
+                    <input type="number" class="form-control" name="ohe_trd">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Engg</label>
+                    <input type="number" class="form-control" name="engg">
+                  </div>
+                  <div class="col-md-6">
+                    <label>ST</label>
+                    <input type="number" class="form-control" name="st">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Electrical_G</label>
+                    <input type="number" class="form-control" name="electrical_g">
+                  </div>
+                  <div class="col-md-6">
+                    <label>BadWeather</label>
+                    <input type="number" class="form-control" name="bad_weather">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>CRO_MRO</label>
+                    <input type="number" class="form-control" name="cro_mro">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Construction</label>
+                    <input type="number" class="form-control" name="construction">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Traffic</label>
+                    <input type="number" class="form-control" name="traffic">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Comml</label>
+                    <input type="number" class="form-control" name="comml">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>OutOfPath</label>
+                    <input type="number" class="form-control" name="out_of_path">
+                  </div>
+                  <div class="col-md-6">
+                    <label>OthersRly</label>
+                    <input type="number" class="form-control" name="others_rly">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>LO</label>
+                    <input type="number" class="form-control" name="lo">
+                  </div>
+                  <div class="col-md-6">
+                    <label>LC_Gate</label>
+                    <input type="number" class="form-control" name="lc_gate">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>NI</label>
+                    <input type="number" class="form-control" name="ni">
+                  </div>
+                  <div class="col-md-6">
+                    <label>PlannedBlock</label>
+                    <input type="number" class="form-control" name="planned_block">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>TotalLoss</label>
+                    <input type="number" class="form-control" name="total_loss">
+                  </div>
+                  <div class="col-md-6">
+                    <label>Speed826</label>
+                    <input type="number" class="form-control" name="speed_826">
+                  </div>
+                </div>
+          
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Speed</label>
+                    <input type="number" class="form-control" name="speed">
+                  </div>
+                </div>
+          
+              </div>
+            </div>
+          
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+          
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  </body>
+  <script>
+    // Disable Right Click
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+    });
+    // Disable DevTools shortcuts
+    document.addEventListener("keydown", function(e) {
+        // F12
+        if (e.key === "F12") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+J
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
+            e.preventDefault();
+        }
+        // Ctrl+U
+        if (e.ctrlKey && e.key.toLowerCase() === "u") {
+            e.preventDefault();
+        }
+        // Ctrl+S (optional)
+        if (e.ctrlKey && e.key.toLowerCase() === "s") {
+            e.preventDefault();
+        }
+    });
+
+    // Optional: try to detect DevTools open
+    setInterval(function () {
+        if (window.outerHeight - window.innerHeight > 150 || window.outerWidth - window.innerWidth > 150) {
+            document.body.innerHTML = "<h1 style='color:red;text-align:center;'>DevTools are not allowed!</h1>";
+        }
+    }, 1000);
+</script>
+<script>
+  // Handle form submissions via AJAX
+  $(document).ready(function() {
+      // Train form submission
+      $('#meTab').on('submit', function(e) {
+          e.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: window.location.pathname,
+              data: $(this).serialize(),
+              success: function(response) {
+                  $('#addMeModal').modal('hide');
+                  location.reload(); // Refresh to show new data
+              },
+              error: function(xhr, errmsg, err) {
+                  // Handle errors here
+                  alert('Error submitting form');
+              }
+          });
+      });
+  
+      // Stats form submission
+      $('#statsForm').on('submit', function(e) {
+          e.preventDefault();
+          $.ajax({
+              type: 'POST',
+              url: window.location.pathname,
+              data: $(this).serialize(),
+              success: function(response) {
+                  $('#addStatsModal').modal('hide');
+                  location.reload(); // Refresh to show new data
+              },
+              error: function(xhr, errmsg, err) {
+                  // Handle errors here
+                  alert('Error submitting form');
+              }
+          });
+      });
+  
+      // Reset forms when modals are closed
+      $('.modal').on('hidden.bs.modal', function() {
+          $(this).find('form')[0].reset();
+      });
+  });
+  </script>
+</html>

@@ -1,0 +1,41 @@
+import csv
+
+# Sample data for reports
+reports = [
+    {
+        "Sr. No": 1,
+        "Report Name": "Monthly Sales Report",
+        "Last Updated At": "2025-05-31",
+        "Dates": "Page 1, Page 2, Page 3"
+    },
+    {
+        "Sr. No": 2,
+        "Report Name": "Inventory Status",
+        "Last Updated At": "2025-06-01",
+        "Dates": "Page 1, Page 2"
+    },
+    {
+        "Sr. No": 3,
+        "Report Name": "Employee Attendance",
+        "Last Updated At": "2025-05-30",
+        "Dates": "Page 1"
+    },
+    {
+        "Sr. No": 4,
+        "Report Name": "Financial Summary",
+        "Last Updated At": "2025-05-29",
+        "Dates": "-"
+    }
+]
+
+# CSV filename
+filename = "reports_sample.csv"
+
+# CSV writing
+with open(filename, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.DictWriter(file, fieldnames=["Sr. No", "Report Name", "Last Updated At", "Dates"])
+    writer.writeheader()
+    for report in reports:
+        writer.writerow(report)
+
+print(f"CSV file '{filename}' created successfully.")

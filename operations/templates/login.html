@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Admin Panel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            width: 900px;
+            max-width: 95%;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Left side: Login form */
+        .form-section {
+            flex: 1;
+            padding: 50px 40px;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        .form-section img.logo {
+            width: 100px;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1.5px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* Right side: Image + About */
+        .image-section {
+            flex: 1;
+            background: #f9fafb;
+            text-align: center;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .image-section img {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 20px auto;
+        }
+
+        .about-text {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            padding: 0 10px;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Form Section -->
+        <div class="form-section">
+            <img src="{% static 'images/jbldiv_logo.png' %}" alt="Logo" class="logo">
+            <h2>Jabalpur Division</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+
+                <button type="submit">Login</button>
+                <div class="login-link">
+                     <a href="{% url 'signup' %}">Register New User </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Right Image + About Section -->
+        <div class="image-section">
+            <img src="{% static 'images/jbldiv.jpg' %}" alt="Illustration">
+            <div class="about-text">
+                <p>The West Central Railway with its headquarters at Jabalpur comprises of Jabalpur and Bhopal divisions of erstwhile Central Railway and Kota division of erstwhile Western Railway. The formal gazette notification announcing the formation of this new zonal railway was issued on 4th July 2002 by the Ministry of Railway, Govt. of India.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // Disable Right Click
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+    });
+
+    // Disable DevTools shortcuts
+    document.addEventListener("keydown", function(e) {
+        // F12
+        if (e.key === "F12") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+I
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+            e.preventDefault();
+        }
+        // Ctrl+Shift+J
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
+            e.preventDefault();
+        }
+        // Ctrl+U
+        if (e.ctrlKey && e.key.toLowerCase() === "u") {
+            e.preventDefault();
+        }
+        // Ctrl+S (optional)
+        if (e.ctrlKey && e.key.toLowerCase() === "s") {
+            e.preventDefault();
+        }
+    });
+
+    // Optional: try to detect DevTools open
+    setInterval(function () {
+        if (window.outerHeight - window.innerHeight > 150 || window.outerWidth - window.innerWidth > 150) {
+            document.body.innerHTML = "<h1 style='color:red;text-align:center;'>DevTools are not allowed!</h1>";
+        }
+    }, 1000);
+</script>
+
+</html>
